@@ -2,375 +2,387 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>pkdriller - personal Portfolio</title>
+  <title>pkdriller | Animated Portfolio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400&display=swap" rel="stylesheet">
+  <!-- Animate.css for quick animations -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
   <!-- Font Awesome for icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
   <style>
-    :root {
-      --main: #00796b;
-      --accent: #ffca28;
-      --bg: #f7f7f7;
-      --card: #fff;
-      --shadow: 0 4px 30px rgba(0,0,0,0.1);
-      --radius: 25px;
-      --text: #222;
-    }
     html, body {
+      height: 100%;
       margin: 0;
       padding: 0;
-      font-family: 'Roboto', Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
       overflow-x: hidden;
+      font-family: 'Segoe UI', Arial, sans-serif;
     }
-    .hidden { display: none; }
-    .center {
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-    }
-    /* Animated entrance */
-    .fade-in {
-      opacity: 0;
-      transform: translateY(30px);
-      animation: fadeIn 1s forwards;
-    }
-    @keyframes fadeIn {
-      to { opacity: 1; transform: none; }
-    }
-    /* Phone Info Splash */
-    #device-info-screen {
-      height: 100vh;
-      min-height: 540px;
-      background: linear-gradient(135deg, var(--main) 60%, var(--accent));
+    body {
+      background: #000;
       color: #fff;
-      padding: 0 20px;
+      min-height: 100vh;
+      position: relative;
     }
-    #device-info {
-      margin-top: 50px;
+    /* Live video background */
+    #bg-video {
+      position: fixed;
+      top: 0; left: 0;
+      min-width: 100vw;
+      min-height: 100vh;
+      object-fit: cover;
+      z-index: -2;
+      filter: brightness(0.6) blur(2px);
+    }
+    /* Overlay for readability */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(120deg, rgba(0,0,0,0.7) 10%, rgba(0, 123, 255, 0.3) 100%);
+      z-index: -1;
+    }
+    /* Phone Info Screen */
+    #phone-info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: rgba(0,0,0,0.85);
+      animation: fadeIn 1s;
+    }
+    #phone-info .info-card {
+      background: rgba(30,30,30,0.7);
+      border-radius: 18px;
+      box-shadow: 0 8px 32px 0 rgba(31,38,135,0.37);
+      padding: 2rem 2.5rem;
+      margin: 1rem;
+      width: 90vw;
+      max-width: 400px;
+      text-align: left;
+      backdrop-filter: blur(6px);
+    }
+    #phone-info h1 {
+      font-size: 2.3rem;
+      margin-bottom: 1.5rem;
+      font-weight: bold;
+      letter-spacing: 2px;
+      text-align: center;
+      color: #00ffd0;
+    }
+    .info-row {
+      margin: 0.7em 0;
+      font-size: 1.1em;
+      display: flex;
+      align-items: center;
+      gap: 0.7em;
+    }
+    .info-row i {
+      color: #0ff;
       font-size: 1.2em;
-      max-width: 430px;
-      border-radius: var(--radius);
-      background: rgba(0,0,0,0.16);
-      box-shadow: var(--shadow);
-      padding: 30px 20px;
-      animation: popIn 1.2s cubic-bezier(0.7,1.6,0.7,1) forwards;
-      opacity: 0;
-      transform: scale(0.85);
-    }
-    @keyframes popIn {
-      to { opacity: 1; transform: none; }
     }
     #continue-btn {
-      margin-top: 30px;
-      font-size: 1.1em;
+      margin-top: 2em;
+      padding: 0.7em 2em;
+      font-size: 1.2em;
       border: none;
-      background: var(--accent);
-      color: var(--main);
-      padding: 12px 38px;
-      border-radius: 40px;
+      border-radius: 24px;
+      background: linear-gradient(90deg, #00ffd0, #0066ff);
+      color: #222;
       font-weight: bold;
       cursor: pointer;
-      box-shadow: var(--shadow);
-      transition: background 0.2s;
-      animation: fadeIn 2s 0.8s forwards;
-      opacity: 0;
-      transform: translateY(40px);
+      box-shadow: 0 2px 12px #00ffd088;
+      transition: background 0.3s, color 0.3s;
+      outline: none;
     }
     #continue-btn:hover {
-      background: #fff176;
+      background: linear-gradient(90deg, #0066ff, #00ffd0);
+      color: #fff;
     }
-    /* Portfolio */
-    section {
-      max-width: 860px;
-      margin: 48px auto;
-      padding: 36px 20px;
-      background: var(--card);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      margin-bottom: 30px;
-      opacity: 0;
-      transform: translateY(40px);
-      animation: fadeIn 1.4s forwards;
-      animation-delay: 0.4s;
-    }
-    section:not(:first-child) {
-      animation-delay: 1.2s;
-    }
-    h1, h2, h3 {
-      font-family: 'Montserrat', Arial, sans-serif;
-      margin: 0 0 15px 0;
-      letter-spacing: 1px;
-    }
-    h1 {
-      font-size: 2.4em;
-      color: var(--main);
-      display: flex;
+    /* Portfolio Main */
+    #portfolio {
+      min-height: 100vh;
+      display: none;
+      flex-direction: column;
       align-items: center;
-      gap: 15px;
+      padding-bottom: 100px;
+      animation: fadeInUp 1s;
+    }
+    .profile-pic {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      border: 4px solid #00ffd0;
+      box-shadow: 0 0 24px #00ffd088;
+      margin-top: 2.5em;
+      background: #fff;
+      object-fit: cover;
+      animation: bounceIn 1.4s;
     }
     h2 {
-      color: var(--accent);
-      font-size: 1.6em;
-      margin-top: 30px;
+      margin: 0.7em 0 0.23em 0;
+      font-size: 2.1em;
+      font-weight: bold;
+      color: #00ffd0;
+      letter-spacing: 1px;
+      text-align: center;
+      animation: fadeInDown 1.5s;
     }
-    .icon-img {
-      height: 2.3em;
-      width: 2.3em;
-      object-fit: contain;
-      vertical-align: middle;
-    }
-    .animated-illustration {
-      width: 180px;
-      display: block;
-      margin: 15px auto;
-      filter: drop-shadow(0 6px 18px #0003);
-      animation: float 3s infinite ease-in-out;
-    }
-    @keyframes float {
-      0%,100% { transform: translateY(0); }
-      50% { transform: translateY(-12px); }
-    }
-    .skills-list {
-      display: flex; gap: 16px; flex-wrap: wrap; margin-top: 15px;
-    }
-    .skill-pill {
-      background: var(--main);
+    .subtitle {
+      font-size: 1.25em;
+      font-weight: 400;
       color: #fff;
-      border-radius: 30px;
-      padding: 7px 18px;
-      font-size: 1.08em;
-      margin-bottom: 7px;
+      opacity: 0.8;
+      margin-bottom: 1em;
+      text-align: center;
+      animation: fadeIn 1.8s;
+    }
+    .section {
+      background: rgba(30,30,35,0.8);
+      border-radius: 18px;
+      box-shadow: 0 4px 20px #00ffd044;
+      margin: 1.5em 0;
+      padding: 1.5em 1.2em;
+      width: 90vw;
+      max-width: 500px;
+      animation: fadeInUp 2s;
+    }
+    .section .sec-title {
       display: flex;
       align-items: center;
-      gap: 8px;
-      box-shadow: 1px 2px 9px #0001;
-      animation: fadeIn 1.5s;
+      font-size: 1.3em;
+      color: #00ffd0;
+      margin-bottom: 0.8em;
+      font-weight: 500;
+      gap: 0.5em;
     }
-    .about-block {
-      font-size: 1.15em;
+    .section .sec-content {
+      font-size: 1.05em;
       line-height: 1.7;
-      margin-bottom: 12px;
-      color: #2e2e2e;
-    }
-    .connect-links {
-      display: flex; gap: 22px; margin-top: 22px; flex-wrap: wrap;
-      justify-content: flex-start;
-    }
-    .connect-icon {
-      background: var(--main);
       color: #fff;
+      opacity: 0.93;
+    }
+    .skills-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8em;
+      margin-top: 0.5em;
+    }
+    .skill-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4em;
+      background: #002b36;
+      color: #00ffd0;
+      border-radius: 12px;
+      padding: 0.4em 1em;
+      font-size: 0.99em;
+      box-shadow: 0 2px 8px #00ffd022;
+      animation: jello 1s;
+    }
+    .links-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.1em;
+      margin-top: 0.7em;
+      justify-content: center;
+    }
+    .links-list a {
+      color: #fff;
+      background: #00ffd0;
       border-radius: 50%;
-      width: 46px; height: 46px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.7em;
-      transition: background 0.2s, scale 0.2s;
-      box-shadow: 0 3px 10px #0002;
+      padding: 0.6em;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3em;
+      box-shadow: 0 1px 8px #00ffd044;
+      transition: background 0.2s, color 0.2s;
       text-decoration: none;
-      margin-bottom: 8px;
+      margin-bottom: 0.2em;
     }
-    .connect-icon:hover { background: var(--accent); color: var(--main); scale: 1.08; }
-    /* Responsive */
+    .links-list a:hover {
+      background: #0066ff;
+      color: #fff;
+      transform: scale(1.12);
+    }
+    .footer {
+      width: 100vw;
+      text-align: center;
+      color: #00ffd0;
+      font-size: 1em;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      background: rgba(0,0,0,0.7);
+      padding: 0.6em 0;
+      letter-spacing: 2px;
+      z-index: 99;
+      box-shadow: 0 -1px 10px #00ffd033;
+    }
     @media (max-width: 600px) {
-      section { padding: 20px 6px; }
-      h1 { font-size: 1.5em; }
-      .skills-list { gap: 10px; }
-      .animated-illustration { width: 110px; }
+      .section, #phone-info .info-card {
+        max-width: 98vw;
+        padding: 1em 0.5em;
+      }
+      .profile-pic {
+        width: 90px; height: 90px;
+      }
+      h2 { font-size: 1.3em; }
     }
-    /* Decorative line */
-    .divider {
-      height: 4px; width: 60px;
-      background: linear-gradient(90deg, var(--accent), var(--main));
-      border: none; margin: 19px 0;
-      border-radius: 3px;
-      animation: fadeIn 1.3s 1.1s forwards;
-      opacity: 0;
-    }
+    /* Animations keyframes */
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(60px); } to { opacity: 1; transform: none; } }
+    @keyframes fadeInDown { from { opacity: 0; transform: translateY(-40px); } to { opacity: 1; transform: none; } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes bounceIn { 0% { transform: scale(0.8); opacity: 0;} 70% { transform: scale(1.09);} 100% { transform: scale(1); opacity: 1;} }
+    @keyframes jello { 0%,100% {transform: scale(1);} 30%{transform: scale(1.24, 0.75);} 40%{transform: scale(0.75, 1.24);} 50%{transform: scale(1.15, 0.85);} 65%{transform: scale(0.85, 1.15);} 75%{transform: scale(1.05, 0.95);} 85%{transform: scale(0.95, 1.05);} }
   </style>
 </head>
 <body>
+  <!-- Live Background Video -->
+  <video id="bg-video" autoplay loop muted poster="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=60">
+    <source src="https://www.w3schools.com/howto/rain.mp4" type="video/mp4">
+    <source src="https://www.w3schools.com/howto/rain.webm" type="video/webm">
+    <!-- Fallback image -->
+    Your browser does not support the video tag.
+  </video>
+  <div class="overlay"></div>
 
-  <!-- Device info splash screen -->
-  <div id="device-info-screen" class="center">
-    <div id="device-info">
-      <h2 style="margin:0 0 22px 0;"><i class="fa-solid fa-mobile-screen"></i> Device Info</h2>
-      <div id="device-details">
-        <div><i class="fa-solid fa-battery-half"></i> Battery: <span id="battery">Detecting...</span></div>
-        <div><i class="fa-solid fa-mobile"></i> Phone: <span id="device">Detecting...</span></div>
-        <div><i class="fa-solid fa-calendar-day"></i> Date: <span id="date"></span></div>
-        <div><i class="fa-solid fa-clock"></i> Time: <span id="time"></span></div>
-        <div><i class="fa-solid fa-globe"></i> IP: <span id="ip">Detecting...</span></div>
-        <div><i class="fa-solid fa-location-pin"></i> Location: <span id="location">Detecting...</span></div>
-      </div>
-      <button id="continue-btn" class="hidden">Continue</button>
+  <!-- Phone Info First Page -->
+  <div id="phone-info" class="animate__animated animate__fadeIn">
+    <div class="info-card animate__animated animate__fadeInDown">
+      <h1><i class="fa-solid fa-mobile-screen-button"></i> Phone Info</h1>
+      <div class="info-row"><i class="fa-solid fa-battery-half"></i> <span id="battery">Battery: ...</span></div>
+      <div class="info-row"><i class="fa-solid fa-mobile"></i> <span id="device">Device: ...</span></div>
+      <div class="info-row"><i class="fa-solid fa-calendar-days"></i> <span id="date">Date: ...</span></div>
+      <div class="info-row"><i class="fa-solid fa-clock"></i> <span id="time">Time: ...</span></div>
+      <div class="info-row"><i class="fa-solid fa-network-wired"></i> <span id="ip">IP: ...</span></div>
+      <div class="info-row"><i class="fa-solid fa-location-dot"></i> <span id="location">Location: ...</span></div>
+      <button id="continue-btn" class="animate__animated animate__pulse animate__infinite">Continue</button>
     </div>
   </div>
 
-  <!-- Portfolio main content -->
-  <div id="portfolio-content" class="hidden">
-    <section style="animation-delay:0.3s;">
-      <h1>
-        <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f4bb.svg" class="icon-img" alt="Laptop" />
-        pkdriller
-      </h1>
-      <div class="about-block fade-in" style="animation-delay:0.6s;">
-        <strong>Developer from Kenya</strong>
-        <br>Building things for the web and beyond. 
+  <!-- Portfolio Main Page -->
+  <div id="portfolio">
+    <img src="https://avatars.githubusercontent.com/u/100404760?v=4" alt="pkdriller profile pic" class="profile-pic animate__animated animate__fadeInDown" loading="lazy">
+    <h2 class="animate__animated animate__fadeInDown">pkdriller</h2>
+    <div class="subtitle animate__animated animate__fadeInDown">Developer from Kenya 🇰🇪</div>
+    
+    <div class="section animate__animated animate__fadeInUp">
+      <div class="sec-title"><i class="fa-solid fa-user-astronaut"></i> About</div>
+      <div class="sec-content">
+        I build beautiful, functional, and interactive web experiences. Technology is my paintbrush, code is my canvas.<br>
+        <span style="color:#00ffd0">Let’s make something amazing.</span>
       </div>
-      <img src="https://undraw.co/api/illustrations/animated?theme=bright&color=26547c&name=developer_activity" alt="Coding illustration" class="animated-illustration fade-in" style="animation-delay:0.9s;" />
-      <hr class="divider"/>
-    </section>
-
-    <section style="animation-delay:0.7s;">
-      <h2><i class="fa-solid fa-user"></i> About</h2>
-      <div class="about-block fade-in" style="animation-delay:1.2s;">
-        Hi, I'm <b>pkdriller</b>. I love crafting sleek experiences, automating things, and learning new tech. Always exploring, always making.
+    </div>
+    
+    <div class="section animate__animated animate__fadeInLeft">
+      <div class="sec-title"><i class="fa-solid fa-lightbulb"></i> Skills</div>
+      <div class="skills-list">
+        <div class="skill-item"><i class="fab fa-js-square"></i> JavaScript</div>
+        <div class="skill-item"><i class="fab fa-html5"></i> HTML5</div>
+        <div class="skill-item"><i class="fab fa-css3-alt"></i> CSS3</div>
+        <div class="skill-item"><i class="fab fa-react"></i> React</div>
+        <div class="skill-item"><i class="fa-solid fa-database"></i> SQL</div>
+        <div class="skill-item"><i class="fab fa-python"></i> Python</div>
+        <div class="skill-item"><i class="fa-solid fa-code"></i> APIs</div>
+        <div class="skill-item"><i class="fa-solid fa-cloud"></i> Cloud</div>
       </div>
-      <img src="https://undraw.co/api/illustrations/animated?theme=bright&color=00796b&name=exploring" alt="About illustration" class="animated-illustration fade-in" style="animation-delay:1.5s;" />
-      <hr class="divider"/>
-    </section>
-
-    <section style="animation-delay:1.1s;">
-      <h2>
-        <i class="fa-solid fa-code"></i> Skills
-      </h2>
-      <div class="skills-list fade-in" style="animation-delay:1.5s;">
-        <span class="skill-pill"><i class="fa-brands fa-js"></i> JavaScript</span>
-        <span class="skill-pill"><i class="fa-brands fa-html5"></i> HTML5</span>
-        <span class="skill-pill"><i class="fa-brands fa-css3-alt"></i> CSS3</span>
-        <span class="skill-pill"><i class="fa-brands fa-python"></i> Python</span>
-        <span class="skill-pill"><i class="fa-brands fa-react"></i> React</span>
-        <span class="skill-pill"><i class="fa-brands fa-git-alt"></i> Git</span>
-        <span class="skill-pill"><i class="fa-solid fa-terminal"></i> CLI</span>
-        <span class="skill-pill"><i class="fa-solid fa-database"></i> Databases</span>
+    </div>
+    
+    <div class="section animate__animated animate__fadeInRight">
+      <div class="sec-title"><i class="fa-solid fa-briefcase"></i> Experience</div>
+      <div class="sec-content">
+        <ul style="padding-left:1em; margin:0;">
+          <li>Building modern web apps</li>
+          <li>Delivering animated websites</li>
+          <li>Contributing to open-source</li>
+          <li>Problem solving with code</li>
+        </ul>
       </div>
-      <img src="https://undraw.co/api/illustrations/animated?theme=bright&color=ffca28&name=code_typing" alt="Skills illustration" class="animated-illustration fade-in" style="animation-delay:2s;" />
-      <hr class="divider"/>
-    </section>
-
-    <section style="animation-delay:1.5s;">
-      <h2><i class="fa-solid fa-briefcase"></i> Experience</h2>
-      <div class="about-block fade-in" style="animation-delay:1.8s;">
-        <b>Freelance Web Developer</b> <br>
-        Shipped several web apps, bots, and tools with a focus on usability and performance. <br>
-        <b>Open Source Contributor</b> <br>
-        Contributed to projects on GitHub, collaborating with devs worldwide.
+    </div>
+    
+    <div class="section animate__animated animate__fadeInUp">
+      <div class="sec-title"><i class="fa-solid fa-link"></i> Connect</div>
+      <div class="links-list">
+        <a href="https://github.com/pkdriller0" title="GitHub" target="_blank"><i class="fab fa-github"></i></a>
+        <a href="https://wa.me/254712345678" title="WhatsApp Account" target="_blank"><i class="fab fa-whatsapp"></i></a>
+        <a href="https://whatsapp.com/channel/0029VaJb8eXHnZKfVnVQv3" title="WhatsApp Channel" target="_blank"><i class="fa-solid fa-bullhorn"></i></a>
+        <a href="mailto:pkdriller0@gmail.com" title="Email"><i class="fa-solid fa-envelope"></i></a>
+        <a href="https://linkedin.com/in/pkdriller0" title="LinkedIn" target="_blank"><i class="fab fa-linkedin"></i></a>
       </div>
-      <img src="https://undraw.co/api/illustrations/animated?theme=bright&color=00796b&name=team_work" alt="Experience illustration" class="animated-illustration fade-in" style="animation-delay:2.1s;" />
-      <hr class="divider"/>
-    </section>
-
-    <section style="animation-delay:2s;">
-      <h2><i class="fa-brands fa-github"></i> Projects</h2>
-      <div class="about-block fade-in" style="animation-delay:2.3s;">
-        Check out my projects on GitHub! I share code, ideas, and experiments there. 
-        <br>
-        <a href="https://github.com/pkdriller0" target="_blank" class="skill-pill" style="background:#222;"><i class="fa-brands fa-github"></i> My GitHub</a>
-      </div>
-      <img src="https://undraw.co/api/illustrations/animated?theme=bright&color=222&name=version_control" alt="Projects illustration" class="animated-illustration fade-in" style="animation-delay:2.5s;" />
-      <hr class="divider"/>
-    </section>
-
-    <section style="animation-delay:2.4s;">
-      <h2><i class="fa-solid fa-plug"></i> Connect with Me</h2>
-      <div class="about-block fade-in" style="animation-delay:2.7s;">
-        Let's connect and build something together!
-      </div>
-      <div class="connect-links fade-in" style="animation-delay:2.8s;">
-        <a class="connect-icon" href="https://github.com/nexustech1911" target="_blank" title="GitHub">
-          <i class="fa-brands fa-github"></i>
-        </a>
-        <a class="connect-icon" href="https://wa.me/254794146821" target="_blank" title="WhatsApp">
-          <i class="fa-brands fa-whatsapp"></i>
-        </a>
-        <a class="connect-icon" href="https://whatsapp.com/channel/0029Vad7YNyJuyA77CtIPX0x" target="_blank" title="WhatsApp Channel">
-          <i class="fa-solid fa-users-rays"></i>
-        </a>
-        <a class="connect-icon" href="mailto: benardwachira49@gmail.com" title="Email">
-          <i class="fa-solid fa-envelope"></i>
-        </a>
-        <a class="connect-icon" href="https://www.linkedin.com/in/pk-driller-ab54a6347" target="_blank" title="LinkedIn">
-          <i class="fa-brands fa-linkedin"></i>
+    </div>
+    
+    <div class="section animate__animated animate__fadeInLeft">
+      <div class="sec-title"><i class="fa-solid fa-cube"></i> Projects on GitHub</div>
+      <div class="sec-content">
+        <a href="https://github.com/pkdriller0?tab=repositories" target="_blank" style="color:#00ffd0;font-weight:bold;">
+          Explore my work <i class="fab fa-github"></i>
         </a>
       </div>
-      <img src="https://undraw.co/api/illustrations/animated?theme=bright&color=ffca28&name=social_dashboard" alt="Connect illustration" class="animated-illustration fade-in" style="animation-delay:3s;" />
-    </section>
+      <!-- You could dynamically include 2-3 top projects using GitHub API if needed -->
+    </div>
+
+    <div class="section animate__animated animate__fadeInUp">
+      <div class="sec-title"><i class="fa-solid fa-handshake"></i> Let's Connect!</div>
+      <div class="sec-content">
+        <span style="font-size:1.1em;">Open for opportunities, collaborations, and creative ideas.<br>
+        <b>Let’s chat on WhatsApp or join my channel!</b>
+        </span>
+      </div>
+    </div>
   </div>
 
-  <!-- Scripts -->
+  <div class="footer">
+    <i class="fa-solid fa-copyright"></i> All rights reserved • pkdriller 2025
+  </div>
+
   <script>
-    // Utility for fade-in on scroll
-    document.addEventListener('DOMContentLoaded', function() {
-      const sections = document.querySelectorAll('section');
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) entry.target.style.opacity = 1;
-        });
-      }, { threshold: 0.2 });
-      sections.forEach(sec => observer.observe(sec));
-    });
-
-    // Device info splash logic
-    function pad(n) { return n<10 ? '0'+n : n; }
-
-    function updateDateTime() {
-      const now = new Date();
-      document.getElementById('date').textContent = now.toDateString();
-      document.getElementById('time').textContent = pad(now.getHours()) + ':' + pad(now.getMinutes());
-    }
-    setInterval(updateDateTime, 1000);
-    updateDateTime();
-
-    // Battery
-    if ('getBattery' in navigator) {
-      navigator.getBattery().then(bat => {
-        function updateBat() {
-          document.getElementById('battery').textContent = Math.round(bat.level*100) + '%';
-        }
-        updateBat();
-        bat.addEventListener('levelchange', updateBat);
-      });
-    } else {
-      document.getElementById('battery').textContent = 'Unknown';
-    }
-
-    // Device info
+    // Phone Info Logic
     function getDeviceType() {
       const ua = navigator.userAgent;
       if (/android/i.test(ua)) return "Android";
-      if (/iphone|ipad|ipod/i.test(ua)) return "iOS";
+      if (/iPad|iPhone|iPod/.test(ua)) return "iOS";
       if (/windows phone/i.test(ua)) return "Windows Phone";
-      if (/windows/i.test(ua)) return "Windows";
-      if (/mac/i.test(ua)) return "Mac";
-      if (/linux/i.test(ua)) return "Linux";
+      if (/Macintosh/i.test(ua)) return "Mac";
+      if (/Windows/i.test(ua)) return "Windows PC";
       return "Unknown";
     }
-    document.getElementById('device').textContent = getDeviceType();
-
-    // IP and Location (public APIs)
-    fetch('https://ipapi.co/json/').then(res=>res.json()).then(data=>{
-      document.getElementById('ip').textContent = data.ip;
-      document.getElementById('location').textContent = data.city+', '+data.country_name;
-    }).catch(()=>{
-      document.getElementById('ip').textContent = "Unknown";
-      document.getElementById('location').textContent = "Unknown";
-    });
-
-    // Show Continue button after fetching info
-    setTimeout(()=>{
-      document.getElementById('continue-btn').classList.remove('hidden');
-    }, 1800);
-
-    // Continue to portfolio
+    function updateTime() {
+      const now = new Date();
+      document.getElementById('date').textContent = 'Date: ' + now.toLocaleDateString();
+      document.getElementById('time').textContent = 'Time: ' + now.toLocaleTimeString();
+    }
+    // Battery
+    navigator.getBattery?.().then(function(bat) {
+      function updateBattery() {
+        document.getElementById('battery').textContent = `Battery: ${(bat.level*100).toFixed(0)}%${bat.charging ? ' ⚡' : ''}`;
+      }
+      bat.addEventListener('levelchange', updateBattery);
+      bat.addEventListener('chargingchange', updateBattery);
+      updateBattery();
+    }).catch(()=>{document.getElementById('battery').textContent = "Battery: N/A";});
+    // Device type
+    document.getElementById('device').textContent = "Device: " + getDeviceType();
+    // Time & Date
+    updateTime();
+    setInterval(updateTime, 1000);
+    // IP Address
+    fetch('https://api.ipify.org?format=json').then(r=>r.json()).then(json=>{
+      document.getElementById('ip').textContent = "IP: " + json.ip;
+    }).catch(()=>{document.getElementById('ip').textContent = "IP: N/A";});
+    // Geolocation
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(pos) {
+        const {latitude, longitude} = pos.coords;
+        document.getElementById('location').textContent = `Location: ${latitude.toFixed(2)}, ${longitude.toFixed(2)}`;
+      }, ()=>{document.getElementById('location').textContent = "Location: N/A";});
+    } else {
+      document.getElementById('location').textContent = "Location: N/A";
+    }
+    // Continue Button
     document.getElementById('continue-btn').onclick = function() {
-      document.getElementById('device-info-screen').style.display = "none";
-      document.getElementById('portfolio-content').classList.remove('hidden');
-      // Animate all sections in order
-      document.querySelectorAll('section').forEach((sec,i)=>{
-        setTimeout(()=>sec.style.opacity=1, 400+i*400);
-      });
-      window.scrollTo(0,0);
+      document.getElementById('phone-info').style.display = "none";
+      document.getElementById('portfolio').style.display = "flex";
+      window.scrollTo(0, 0);
     };
   </script>
 </body>
